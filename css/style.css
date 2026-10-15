@@ -132,6 +132,19 @@ th{font-family:var(--head);font-weight:500;color:var(--muted)}
 #dress-grid>.card.wide{grid-column:1/-1}
 #dress-grid .gallery .poster-img{width:calc(50% - 6px);max-width:none;min-width:0}
 @media (max-width:700px){#dress-grid{grid-template-columns:1fr}}
+.cmd{position:relative;margin:6px 0 14px}
+.cmd pre{margin:0;padding:10px 110px 10px 12px;background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--olive);border-radius:4px;white-space:pre-wrap;word-break:break-word;font:15px/1.5 ui-monospace,Consolas,"Courier New",monospace}
+.copy{position:absolute;top:6px;right:6px;border:1.5px solid var(--olive);background:var(--surface);border-radius:4px;padding:3px 10px;font-size:14px}
+.copy:hover{background:var(--olive);color:var(--olive-ink)}
+ol.oath>li{margin:0 0 12px}
+.oath-ex code{font:15px ui-monospace,Consolas,monospace;background:var(--bg);padding:2px 6px;border-radius:4px}
+@media (max-width:560px){.cmd pre{padding-right:12px;padding-bottom:42px}}
+.macro{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0 16px;padding:12px;background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--brass);border-radius:6px}
+.macro label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--muted)}
+.macro input{font:inherit;color:var(--ink);padding:8px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--surface);min-width:220px}
+.macro .macro-hint{flex-basis:100%;margin:0;font-size:14px;color:var(--muted)}
+.ph.filled{background:color-mix(in srgb,var(--brass) 30%,transparent);border-radius:3px;padding:0 2px}
+@media (max-width:560px){.macro input{min-width:0;width:100%}.macro label{flex:1 1 100%}}
 /* quiz */
 .quiz{max-width:760px}
 .qbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px;font-family:var(--head);font-size:18px;color:var(--muted)}
