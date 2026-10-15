@@ -122,6 +122,16 @@ th{font-family:var(--head);font-weight:500;color:var(--muted)}
 .gallery{display:flex;flex-wrap:wrap;gap:12px}
 .gallery .poster-img{width:calc(25% - 9px);min-width:150px;max-width:240px}
 @media (max-width:700px){.dress-wrap{grid-template-columns:minmax(0,260px)}}
+.grid>.card{margin:0 0 22px}
+.grid>.card.wide{margin:8px 0 26px}
+.grid>.card.wide:first-child{margin-top:0}
+.lecture .card{margin-bottom:22px}
+#doc-body>.card{margin-bottom:22px}
+#dress-grid{column-count:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:start}
+#dress-grid>.card,#dress-grid>.card.wide{margin:0;break-inside:auto}
+#dress-grid>.card.wide{grid-column:1/-1}
+#dress-grid .gallery .poster-img{width:calc(50% - 6px);max-width:none;min-width:0}
+@media (max-width:700px){#dress-grid{grid-template-columns:1fr}}
 /* quiz */
 .quiz{max-width:760px}
 .qbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px;font-family:var(--head);font-size:18px;color:var(--muted)}
