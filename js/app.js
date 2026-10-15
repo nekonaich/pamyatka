@@ -5,10 +5,29 @@ function esc(s){return s.replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"
 function plain(html){var d=document.createElement("div");d.innerHTML=html;return d.textContent.replace(/\s+/g," ").trim()}
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
 
+var OATH={name:"",id:""};
+function applyOath(root,skip){
+  root=root||document;
+  Array.prototype.forEach.call(root.querySelectorAll('.ph[data-ph="name"]'),function(e){e.textContent=OATH.name||"(фамилия имя)";e.classList.toggle("filled",!!OATH.name)});
+  Array.prototype.forEach.call(root.querySelectorAll('.ph[data-ph="id"]'),function(e){e.textContent=OATH.id||"static id";e.classList.toggle("filled",!!OATH.id)});
+  Array.prototype.forEach.call(root.querySelectorAll("input[data-oath]"),function(i){
+    var k=i.getAttribute("data-oath");
+    if(i!==skip&&i.value!==OATH[k])i.value=OATH[k];
+  });
+}
+document.addEventListener("input",function(e){
+  var t=e.target,k=t.getAttribute&&t.getAttribute("data-oath");
+  if(!k)return;
+  if(k==="id"){var d=t.value.replace(/[^0-9]/g,"");if(d!==t.value)t.value=d;OATH.id=d}
+  else{OATH.name=t.value.replace(/\s+/g," ").trim()}
+  applyOath(document,t);
+});
+
 function cardEl(c,from){
   var a=document.createElement("article");
   a.className="card"+(c.wide?" wide":"");
   a.innerHTML=(from?'<span class="from">'+from+'</span>':'')+(c.topic?'<span class="tag">'+esc(c.topic)+'</span>':'')+'<h3>'+esc(c.title)+'</h3>'+c.html;
+  applyOath(a);
   return a;
 }
 
@@ -33,7 +52,7 @@ function highlight(root,q){
 }
 
 /* ============ вкладки ============ */
-var tabs={memo:"t-memo",ustav:"t-ustav",dress:"t-dress",lec:"t-lec",exam:"t-exam"};
+var tabs={memo:"t-memo",ustav:"t-ustav",dress:"t-dress",kpp:"t-kpp",lec:"t-lec",exam:"t-exam"};
 function showTab(k){
   Object.keys(tabs).forEach(function(key){
     var on=key===k;
@@ -66,7 +85,7 @@ function renderChips(){
 var curGroup="Все";
 function renderDress(){
   var chips=$("#dress-chips");chips.innerHTML="";
-  ["Все","Общее","ВС РО","ФСВНГ"].forEach(function(g){
+  ["Все","Общее","ФСВНГ"].forEach(function(g){
     var b=document.createElement("button");b.type="button";b.className="chip";b.textContent=g;
     b.setAttribute("aria-pressed",g===curGroup);
     b.onclick=function(){curGroup=g;renderDress()};
@@ -86,6 +105,12 @@ function renderDress(){
     c.innerHTML='<span class="tag">'+esc(d.group||"Дресс-код")+'</span><h3>'+esc(d.title)+'</h3>'+inner;
     grid.appendChild(c);
   });
+}
+
+/* ============ КПП ============ */
+function renderKpp(){
+  var g=$("#kpp-grid");g.innerHTML="";
+  KPP.forEach(function(c){g.appendChild(cardEl(c))});
 }
 
 /* ============ лекция ============ */
@@ -108,6 +133,7 @@ USTAV.forEach(function(d){d.cats.forEach(function(cat){cat.arts.forEach(function
 })})});
 Object.keys(BASIS).forEach(function(k){var b=BASIS[k];INDEX.push({src:k,c:{topic:"Итог",title:b.title,html:"<ul>"+b.items.map(function(t){return "<li>"+esc(t)+"</li>"}).join("")+"</ul>"},text:(k+" "+b.title+" "+b.items.join(" ")).toLowerCase()})});
 DRESS.forEach(function(d){INDEX.push({src:"Форма",c:{topic:"Дресс-код",title:d.title,html:d.html||"<p>Фото формы смотрите во вкладке «Дресс-код».</p>"},text:("дресс-код форма "+(d.group||"")+" "+(d.unit||"")+" "+d.title+" "+plain(d.html||"")).toLowerCase()})});
+KPP.forEach(function(c){INDEX.push({src:"КПП",c:c,text:(c.topic+" "+c.title+" "+plain(c.html)).toLowerCase()})});
 LECTURE.forEach(function(c){INDEX.push({src:"Лекция",c:c,text:(c.title+" "+plain(c.html)).toLowerCase()})});
 
 function runSearch(){
@@ -208,6 +234,20 @@ document.addEventListener("click",function(e){
 });
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){var l=document.querySelector(".lightbox");if(l)l.remove()}});
 
+function copyText(t,btn){
+  function done(){var o=btn.textContent;btn.textContent="Скопировано";setTimeout(function(){btn.textContent="Копировать"},1500)}
+  function fallback(){
+    var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();
+    try{document.execCommand("copy");done()}catch(e){btn.textContent="Выделите и копируйте вручную"}
+    document.body.removeChild(a);
+  }
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,fallback)}else{fallback()}
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest(".copy");if(!b)return;
+  copyText(b.parentNode.querySelector("pre").textContent,b);
+});
+
 /* ============ старт ============ */
-renderChips();renderMemo();renderUstav();renderDress();renderLecture();quizHome();
+renderChips();renderMemo();renderUstav();renderDress();renderKpp();renderLecture();quizHome();
 var h=(location.hash||"").slice(1);if(tabs[h])showTab(h);
