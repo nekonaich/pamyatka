@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Памятка военнослужащего: субординация, строй, экзамен</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <h1>Памятка военнослужащего</h1>
+      <small>Субординация · Строй · Дисциплина</small>
+    </div>
+    <label class="search">
+      <span aria-hidden="true">🔎</span>
+      <input id="q" type="search" placeholder="Поиск: «разрешите», «строй», «выговор», «ст. 23»…" autocomplete="off" aria-label="Поиск по памятке и лекции">
+      <kbd>/</kbd>
+      <button id="clr" type="button" aria-label="Очистить поиск">×</button>
+    </label>
+    <div class="tabs" role="tablist" aria-label="Разделы">
+      <button class="tab" role="tab" id="t-memo" aria-selected="true" aria-controls="p-memo">Памятка</button>
+      <button class="tab" role="tab" id="t-ustav" aria-selected="false" aria-controls="p-ustav">Устав</button>
+      <button class="tab" role="tab" id="t-dress" aria-selected="false" aria-controls="p-dress">Дресс-код</button>
+      <button class="tab" role="tab" id="t-kpp" aria-selected="false" aria-controls="p-kpp">КПП</button>
+      <button class="tab" role="tab" id="t-lec" aria-selected="false" aria-controls="p-lec">Лекция по НПА</button>
+      <button class="tab" role="tab" id="t-exam" aria-selected="false" aria-controls="p-exam">Экзамен</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="p-search" class="panel" hidden aria-live="polite"></section>
+
+  <section id="p-memo" class="panel" role="tabpanel" aria-labelledby="t-memo">
+    <div class="notice"><b>Что здесь есть:</b> материалы по субординации, воинской дисциплине и строевой подготовке. Это короткая выжимка. Полные тексты Дисциплинарного устава, Устава ВС и Караульно-постового устава лежат во вкладке «Устав», разбитые по категориям.</div>
+    <div class="chips" id="chips" role="group" aria-label="Фильтр по теме"></div>
+    <div class="grid" id="memo-grid"></div>
+  </section>
+
+  <section id="p-ustav" class="panel lecture" role="tabpanel" aria-labelledby="t-ustav" hidden>
+    <div class="chips" id="doc-chips" role="group" aria-label="Выбор устава"></div>
+    <div id="doc-body"></div>
+  </section>
+
+  <section id="p-dress" class="panel" role="tabpanel" aria-labelledby="t-dress" hidden>
+    <div class="notice"><b>Дресс-код подразделений.</b> Общие требования взяты из Устава ВС и Дисциплинарного устава. Ниже форма подразделений: нажмите на фото, чтобы открыть его крупно.</div>
+    <div class="chips" id="dress-chips" role="group" aria-label="Фильтр по ведомству"></div>
+    <div class="grid" id="dress-grid"></div>
+  </section>
+
+  <section id="p-kpp" class="panel" role="tabpanel" aria-labelledby="t-kpp" hidden>
+    <div class="grid" id="kpp-grid"></div>
+  </section>
+
+  <section id="p-lec" class="panel lecture" role="tabpanel" aria-labelledby="t-lec" hidden>
+    <div class="toc" id="toc"></div>
+    <div id="lec-body"></div>
+  </section>
+
+  <section id="p-exam" class="panel quiz" role="tabpanel" aria-labelledby="t-exam" hidden>
+    <div id="quiz"></div>
+  </section>
+</main>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
