@@ -75,7 +75,7 @@ function renderDress(){
   var grid=$("#dress-grid");grid.innerHTML="";
   DRESS.filter(function(d){return curGroup==="Все"||d.group===curGroup}).forEach(function(d){
     var imgs=d.imgs||(d.img?[d.img]:[]);
-    var c=document.createElement("article");c.className="card"+((d.wide||imgs.length>1)?" wide":"");c.id=d.id;
+    var c=document.createElement("article");c.className="card"+(d.wide?" wide":"");c.id=d.id;
     function im(src,cls){return '<img class="poster-img '+cls+'" src="'+src+'" alt="'+esc(d.alt||d.title)+'" title="Нажмите, чтобы открыть крупно" loading="lazy">'}
     var inner;
     if(imgs.length&&!d.html){
