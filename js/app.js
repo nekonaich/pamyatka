@@ -52,7 +52,7 @@ function highlight(root,q){
 }
 
 /* ============ вкладки ============ */
-var tabs={memo:"t-memo",ustav:"t-ustav",dress:"t-dress",kpp:"t-kpp",lec:"t-lec",exam:"t-exam"};
+var tabs={memo:"t-memo",ustav:"t-ustav",dress:"t-dress",kpp:"t-kpp",waves:"t-waves",lec:"t-lec",exam:"t-exam"};
 function showTab(k){
   Object.keys(tabs).forEach(function(key){
     var on=key===k;
@@ -113,6 +113,12 @@ function renderKpp(){
   KPP.forEach(function(c){g.appendChild(cardEl(c))});
 }
 
+/* ============ гос. волны ============ */
+function renderWaves(){
+  var g=$("#waves-grid");g.innerHTML="";
+  WAVES.forEach(function(c){g.appendChild(cardEl(c))});
+}
+
 /* ============ лекция ============ */
 function renderLecture(){
   var toc=$("#toc"),body=$("#lec-body");toc.innerHTML="";body.innerHTML="";
@@ -134,6 +140,7 @@ USTAV.forEach(function(d){d.cats.forEach(function(cat){cat.arts.forEach(function
 Object.keys(BASIS).forEach(function(k){var b=BASIS[k];INDEX.push({src:k,c:{topic:"Итог",title:b.title,html:"<ul>"+b.items.map(function(t){return "<li>"+esc(t)+"</li>"}).join("")+"</ul>"},text:(k+" "+b.title+" "+b.items.join(" ")).toLowerCase()})});
 DRESS.forEach(function(d){INDEX.push({src:"Форма",c:{topic:"Дресс-код",title:d.title,html:d.html||"<p>Фото формы смотрите во вкладке «Дресс-код».</p>"},text:("дресс-код форма "+(d.group||"")+" "+(d.unit||"")+" "+d.title+" "+plain(d.html||"")).toLowerCase()})});
 KPP.forEach(function(c){INDEX.push({src:"КПП",c:c,text:(c.topic+" "+c.title+" "+plain(c.html)).toLowerCase()})});
+WAVES.forEach(function(c){INDEX.push({src:"Гос. волны",c:c,text:(c.topic+" "+c.title+" "+plain(c.html)).toLowerCase()})});
 LECTURE.forEach(function(c){INDEX.push({src:"Лекция",c:c,text:(c.title+" "+plain(c.html)).toLowerCase()})});
 
 function runSearch(){
@@ -249,7 +256,7 @@ document.addEventListener("click",function(e){
 });
 
 /* ============ старт ============ */
-renderChips();renderMemo();renderUstav();renderDress();renderKpp();renderLecture();quizHome();
+renderChips();renderMemo();renderUstav();renderDress();renderKpp();renderWaves();renderLecture();quizHome();
 var h=(location.hash||"").slice(1);if(tabs[h])showTab(h);
 
 /* ============ проверка обновлений сайта ============ */
