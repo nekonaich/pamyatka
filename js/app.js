@@ -251,3 +251,30 @@ document.addEventListener("click",function(e){
 /* ============ старт ============ */
 renderChips();renderMemo();renderUstav();renderDress();renderKpp();renderLecture();quizHome();
 var h=(location.hash||"").slice(1);if(tabs[h])showTab(h);
+
+/* ============ проверка обновлений сайта ============ */
+(function(){
+  var meta=document.querySelector('meta[name="build"]');
+  var cur=meta&&meta.content;
+  if(!cur||location.protocol==="file:")return;
+  var shown=false;
+  function banner(){
+    if(document.getElementById("upd"))return;
+    var b=document.createElement("div");b.id="upd";b.className="upd";b.setAttribute("role","status");
+    b.innerHTML='<span>Доступна новая версия сайта.</span><button type="button" class="go">Обновить</button><button type="button" class="x">Позже</button>';
+    b.querySelector(".go").onclick=function(){location.reload()};
+    b.querySelector(".x").onclick=function(){b.remove()};
+    document.body.appendChild(b);
+  }
+  function check(){
+    if(shown||document.hidden)return;
+    var url=location.href.split("#")[0].split("?")[0]+"?_="+Date.now();
+    fetch(url,{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){
+      var m=t.match(/<meta name="build" content="([^"]+)"/);
+      if(m&&m[1]!==cur){shown=true;banner()}
+    }).catch(function(){});
+  }
+  setTimeout(check,20000);
+  setInterval(check,180000);
+  document.addEventListener("visibilitychange",function(){if(!document.hidden)check()});
+})();
