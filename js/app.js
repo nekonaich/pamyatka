@@ -52,7 +52,7 @@ function highlight(root,q){
 }
 
 /* ============ вкладки ============ */
-var tabs={memo:"t-memo",ustav:"t-ustav",dress:"t-dress",kpp:"t-kpp",waves:"t-waves",lec:"t-lec",exam:"t-exam"};
+var tabs={memo:"t-memo",ustav:"t-ustav",dress:"t-dress",kpp:"t-kpp",lec:"t-lec",exam:"t-exam"};
 function showTab(k){
   Object.keys(tabs).forEach(function(key){
     var on=key===k;
@@ -113,12 +113,6 @@ function renderKpp(){
   KPP.forEach(function(c){g.appendChild(cardEl(c))});
 }
 
-/* ============ гос. волны ============ */
-function renderWaves(){
-  var g=$("#waves-grid");g.innerHTML="";
-  WAVES.forEach(function(c){g.appendChild(cardEl(c))});
-}
-
 /* ============ лекция ============ */
 function renderLecture(){
   var toc=$("#toc"),body=$("#lec-body");toc.innerHTML="";body.innerHTML="";
@@ -140,7 +134,6 @@ USTAV.forEach(function(d){d.cats.forEach(function(cat){cat.arts.forEach(function
 Object.keys(BASIS).forEach(function(k){var b=BASIS[k];INDEX.push({src:k,c:{topic:"Итог",title:b.title,html:"<ul>"+b.items.map(function(t){return "<li>"+esc(t)+"</li>"}).join("")+"</ul>"},text:(k+" "+b.title+" "+b.items.join(" ")).toLowerCase()})});
 DRESS.forEach(function(d){INDEX.push({src:"Форма",c:{topic:"Дресс-код",title:d.title,html:d.html||"<p>Фото формы смотрите во вкладке «Дресс-код».</p>"},text:("дресс-код форма "+(d.group||"")+" "+(d.unit||"")+" "+d.title+" "+plain(d.html||"")).toLowerCase()})});
 KPP.forEach(function(c){INDEX.push({src:"КПП",c:c,text:(c.topic+" "+c.title+" "+plain(c.html)).toLowerCase()})});
-WAVES.forEach(function(c){INDEX.push({src:"Гос. волны",c:c,text:(c.topic+" "+c.title+" "+plain(c.html)).toLowerCase()})});
 LECTURE.forEach(function(c){INDEX.push({src:"Лекция",c:c,text:(c.title+" "+plain(c.html)).toLowerCase()})});
 
 function runSearch(){
@@ -256,7 +249,7 @@ document.addEventListener("click",function(e){
 });
 
 /* ============ старт ============ */
-renderChips();renderMemo();renderUstav();renderDress();renderKpp();renderWaves();renderLecture();quizHome();
+renderChips();renderMemo();renderUstav();renderDress();renderKpp();renderLecture();quizHome();
 var h=(location.hash||"").slice(1);if(tabs[h])showTab(h);
 
 /* ============ проверка обновлений сайта ============ */
@@ -265,10 +258,26 @@ var h=(location.hash||"").slice(1);if(tabs[h])showTab(h);
   var cur=meta&&meta.content;
   if(!cur||location.protocol==="file:")return;
   var shown=false;
-  function banner(){
+  var LABELS=[["added","Добавлено"],["changed","Изменено"],["removed","Убрано"]];
+  function collect(text){
+    var m=text.match(/<script type="application\/json" id="changelog">([\s\S]*?)<\/script>/);
+    if(!m)return [];
+    var list;try{list=JSON.parse(m[1])}catch(e){return []}
+    var out=[];
+    for(var i=0;i<list.length;i++){if(list[i].id===cur)break;out.push(list[i])}
+    if(out.length===list.length&&out.length>3)out=out.slice(0,3);
+    return out;
+  }
+  function banner(entries){
     if(document.getElementById("upd"))return;
+    var chg="";
+    LABELS.forEach(function(l){
+      var items=[];
+      entries.forEach(function(e){(e[l[0]]||[]).forEach(function(t){if(items.indexOf(t)<0)items.push(t)})});
+      if(items.length)chg+='<h4>'+l[1]+'</h4><ul>'+items.map(function(t){return '<li>'+esc(t)+'</li>'}).join("")+'</ul>';
+    });
     var b=document.createElement("div");b.id="upd";b.className="upd";b.setAttribute("role","status");
-    b.innerHTML='<span>Доступна новая версия сайта.</span><button type="button" class="go">Обновить</button><button type="button" class="x">Позже</button>';
+    b.innerHTML='<div class="row"><span>Доступна новая версия сайта.</span><button type="button" class="go">Обновить</button><button type="button" class="x">Позже</button></div>'+(chg?'<div class="chg">'+chg+'</div>':'');
     b.querySelector(".go").onclick=function(){location.reload()};
     b.querySelector(".x").onclick=function(){b.remove()};
     document.body.appendChild(b);
@@ -278,7 +287,7 @@ var h=(location.hash||"").slice(1);if(tabs[h])showTab(h);
     var url=location.href.split("#")[0].split("?")[0]+"?_="+Date.now();
     fetch(url,{cache:"no-store"}).then(function(r){return r.ok?r.text():""}).then(function(t){
       var m=t.match(/<meta name="build" content="([^"]+)"/);
-      if(m&&m[1]!==cur){shown=true;banner()}
+      if(m&&m[1]!==cur){shown=true;banner(collect(t))}
     }).catch(function(){});
   }
   setTimeout(check,20000);
