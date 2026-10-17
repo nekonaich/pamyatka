@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="build" content="566a6c65c0">
+<meta name="build" content="42ee1e0994">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%233F5236%22/%3E%3Cpolygon%20fill%3D%22%23D1A94A%22%20points%3D%2232.0%2C10.0%2037.6%2C25.3%2053.9%2C25.9%2041.0%2C35.9%2045.5%2C51.6%2032.0%2C42.5%2018.5%2C51.6%2023.0%2C35.9%2010.1%2C25.9%2026.4%2C25.3%22/%3E%3C/svg%3E">
 <link rel="icon" type="image/png" sizes="128x128" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAACxUlEQVR42u3dzVUbQRDE8Z1+hOBYfHUOvjgLgnEWXJSDroqFHPCJ54+nB8haoZ6pX904ADtd1f9uxGo1tp317fvXl41upuPhNPb8eYPh2YEYjM8OwmB8dhCK+WvpUo8G47NpUMzPpkExPzsExfzsEBTzs0NQSpOt0v3ZFCjmZ4fACDACdH8yBRAAAXR/MgUQAAFIACg3AOnz/+ePL9F7AAIYAbo/mQIIgABmvwBQbCAEAAF0ezIFEAABdL8AUGxABAABdLcAUGxQiqkIQAJAqcQoZiIABQenmIgAJACUSpBiHgKQAOj+VJIgAAJQMgWKWQhAAqD7U8mCAOEae7893Py9rR6fnnsTYO8LpNvWdtzyARFo0L+patYLZ/4kS6AQ9K5drXIQ5jfcAewF/ZulVj8g85sFQAh61aTSDsz8O+8A9oJeTVAKkX3mUpDss5bCZJ9xdH1Y9Gp7Qddwl4Jln6UULvsMpYDZ1z5m+sCIWfaCmUJbOiqbWNPdFNq5wDOOK3cFh2u6AHTeA2Z87QIBEIAEgATA/M/cAxAAAUgA4D/2WhEAAUgASADM1MxrRoBwPSQf/s9/3/rw6GDzz32dova3hO3dmR8xes/f6abQxl0/q2l2gE/owtfv8YERk+P/2m6+9vu7B+hB12fToJi/zkIXT4DPMGg1Gizx7uB7deYM17j8CLhnYR+fnqcfCzWz8V2KP3MIWo6A99DaueBvXXvH6y5dn02Dmsl8QQ0MwMyLlgdEXDlDV3rh5fVc3c5Uuj6bBlM9Ioa8DkACQAJA+wXgeDgNZcjU8XAaCGAEkABQdgDsAZnzHwHodwBQIK/7EYD+DgAKZHX/WQIIQY75RgCdDwAKZHT/mwQQgvXNf3cECMHa5n9oBxCCdc3ftm27yFy3j61j/H/9FYAGa5l/MQHQYB3jrw6AIMxt/G4BEIi5DP9XvwAho1bRErcFGQAAAABJRU5ErkJggg==">
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAACxUlEQVR42u3dzVUbQRDE8Z1+hOBYfHUOvjgLgnEWXJSDroqFHPCJ54+nB8haoZ6pX904ADtd1f9uxGo1tp317fvXl41upuPhNPb8eYPh2YEYjM8OwmB8dhCK+WvpUo8G47NpUMzPpkExPzsExfzsEBTzs0NQSpOt0v3ZFCjmZ4fACDACdH8yBRAAAXR/MgUQAAFIACg3AOnz/+ePL9F7AAIYAbo/mQIIgABmvwBQbCAEAAF0ezIFEAABdL8AUGxABAABdLcAUGxQiqkIQAJAqcQoZiIABQenmIgAJACUSpBiHgKQAOj+VJIgAAJQMgWKWQhAAqD7U8mCAOEae7893Py9rR6fnnsTYO8LpNvWdtzyARFo0L+patYLZ/4kS6AQ9K5drXIQ5jfcAewF/ZulVj8g85sFQAh61aTSDsz8O+8A9oJeTVAKkX3mUpDss5bCZJ9xdH1Y9Gp7Qddwl4Jln6UULvsMpYDZ1z5m+sCIWfaCmUJbOiqbWNPdFNq5wDOOK3cFh2u6AHTeA2Z87QIBEIAEgATA/M/cAxAAAUgA4D/2WhEAAUgASADM1MxrRoBwPSQf/s9/3/rw6GDzz32dova3hO3dmR8xes/f6abQxl0/q2l2gE/owtfv8YERk+P/2m6+9vu7B+hB12fToJi/zkIXT4DPMGg1Gizx7uB7deYM17j8CLhnYR+fnqcfCzWz8V2KP3MIWo6A99DaueBvXXvH6y5dn02Dmsl8QQ0MwMyLlgdEXDlDV3rh5fVc3c5Uuj6bBlM9Ioa8DkACQAJA+wXgeDgNZcjU8XAaCGAEkABQdgDsAZnzHwHodwBQIK/7EYD+DgAKZHX/WQIIQY75RgCdDwAKZHT/mwQQgvXNf3cECMHa5n9oBxCCdc3ftm27yFy3j61j/H/9FYAGa5l/MQHQYB3jrw6AIMxt/G4BEIi5DP9XvwAho1bRErcFGQAAAABJRU5ErkJggg==">
 <title>Памятка военнослужащего: субординация, строй, экзамен</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=566a6c65c0">
+<link rel="stylesheet" href="css/style.css?v=42ee1e0994">
 
 </head>
 <body>
@@ -77,6 +77,16 @@
  {
   "id": "",
   "added": [
+   "В «Памятке» карточка «Погоны»: знаки различия по воинским званиям."
+  ],
+  "changed": [
+   "Формат постовых докладов на КПП: «состояние Код 1», в промежуточных докладах добавлено «состав 1», в примерах теперь Максим Меркушев."
+  ],
+  "removed": []
+ },
+ {
+  "id": "566a6c65c0",
+  "added": [
    "В панели «Доступна новая версия сайта» теперь показано, что добавили, изменили и убрали."
   ],
   "changed": [],
@@ -135,7 +145,7 @@ window.addEventListener("error",function(e){
   m.insertBefore(d,m.firstChild);
 });
 </script>
-<script src="js/data.js?v=566a6c65c0"></script>
-<script src="js/app.js?v=566a6c65c0"></script>
+<script src="js/data.js?v=42ee1e0994"></script>
+<script src="js/app.js?v=42ee1e0994"></script>
 </body>
 </html>
