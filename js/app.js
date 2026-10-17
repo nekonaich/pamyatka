@@ -276,11 +276,18 @@ var h=(location.hash||"").slice(1);if(tabs[h])showTab(h);
       entries.forEach(function(e){(e[l[0]]||[]).forEach(function(t){if(items.indexOf(t)<0)items.push(t)})});
       if(items.length)chg+='<h4>'+l[1]+'</h4><ul>'+items.map(function(t){return '<li>'+esc(t)+'</li>'}).join("")+'</ul>';
     });
-    var b=document.createElement("div");b.id="upd";b.className="upd";b.setAttribute("role","status");
-    b.innerHTML='<div class="row"><span>Доступна новая версия сайта.</span><button type="button" class="go">Обновить</button><button type="button" class="x">Позже</button></div>'+(chg?'<div class="chg">'+chg+'</div>':'');
+    var b=document.createElement("div");b.id="upd";b.className="upd";
+    b.innerHTML='<div class="box" role="dialog" aria-modal="true" aria-labelledby="upd-t"><h3 id="upd-t">Доступна новая версия сайта</h3>'
+      +(chg?'<div class="chg">'+chg+'</div>':'<p>Обновите страницу, чтобы увидеть последнюю версию.</p>')
+      +'<div class="btns"><button type="button" class="go">Обновить</button><button type="button" class="x">Позже</button></div></div>';
+    function onKey(e){if(e.key==="Escape")close()}
+    function close(){b.remove();document.removeEventListener("keydown",onKey)}
     b.querySelector(".go").onclick=function(){location.reload()};
-    b.querySelector(".x").onclick=function(){b.remove()};
+    b.querySelector(".x").onclick=close;
+    b.onclick=function(e){if(e.target===b)close()};
+    document.addEventListener("keydown",onKey);
     document.body.appendChild(b);
+    var go=b.querySelector(".go");if(go&&go.focus)go.focus();
   }
   function check(){
     if(shown||document.hidden)return;
