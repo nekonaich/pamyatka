@@ -297,7 +297,7 @@ var h=(location.hash||"").slice(1);if(tabs[h])showTab(h);
       if(m&&m[1]!==cur){shown=true;banner(collect(t))}
     }).catch(function(){});
   }
-  setTimeout(check,20000);
-  setInterval(check,180000);
+  setTimeout(check,10000);
+  setInterval(check,60000);
   document.addEventListener("visibilitychange",function(){if(!document.hidden)check()});
 })();
